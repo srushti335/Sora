@@ -12,10 +12,10 @@ if (env.NODE_ENV === 'production') {
   }
   supabaseUrl = env.SUPABASE_URL;
 
-  if (!env.SUPABASE_SERVICE_KEY) {
-    throw new Error('SUPABASE_SERVICE_KEY is required');
+  if (!env.SUPABASE_SERVICE_ROLE_KEY) {
+    throw new Error('SUPABASE_SERVICE_ROLE_KEY is required');
   }
-  supabaseKey = env.SUPABASE_SERVICE_KEY;
+  supabaseKey = env.SUPABASE_SERVICE_ROLE_KEY;
 } else {
   if (!env.SUPABASE_DEV_URL) {
     throw new Error('SUPABASE_DEV_URL is required');
