@@ -104,12 +104,10 @@ export const action = async ({ request }: ActionFunctionArgs) => {
     });
   }
 
-  // const payload = process.env.NODE_ENV === 'production' ? await requestPayload(request) : undefined;
   authCookie.set('auth_token', {
     access_token: session.access_token,
     refresh_token: session.refresh_token,
     expires_at: Date.now() + (session.expires_in - 10) * 1000
-    // req_payload: payload,
   });
 
   const ref = (searchParams.get('ref') || '/').replace('_0x3F_', '?').replace('_0x26', '&');
