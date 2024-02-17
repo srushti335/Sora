@@ -28,15 +28,15 @@ export const getUserFromCookie = async (cookie: string) => {
   }
 };
 
-export async function requestPayload(req: Request) {
-  if (!process.env.REQ_ENCODE_ATTRS) {
-    console.error('Please make sure you have REQ_ENCODE_ATTRS in your .env');
-    process.exit();
-  }
+// export async function requestPayload(req: Request) {
+//   if (!process.env.REQ_ENCODE_ATTRS) {
+//     console.error('Please make sure you have REQ_ENCODE_ATTRS in your .env');
+//     process.exit();
+//   }
 
-  const payloadAttrs = process.env.REQ_ENCODE_ATTRS.split('.');
-  return payloadAttrs.map((attr) => req.headers.get(attr)).join('');
-}
+//   const payloadAttrs = process.env.REQ_ENCODE_ATTRS.split('.');
+//   return payloadAttrs.map((attr) => req.headers.get(attr)).join('');
+// }
 
 export async function authenticate(
   request: Request,
@@ -66,7 +66,7 @@ export async function authenticate(
   // try to get the session (from cookie) and payload from request
   const [session, payload, botcheck] = await Promise.all([
     getSessionFromCookie(request.headers.get('Cookie')),
-    process.env.NODE_ENV === 'production' ? requestPayload(request) : undefined,
+    // process.env.NODE_ENV === 'production' ? requestPayload(request) : undefined,
     isbotAuth(request.headers.get('User-Agent')),
   ]);
 
@@ -112,8 +112,8 @@ export async function authenticate(
           access_token: data.session.access_token,
           refresh_token: data.session.refresh_token,
           expires_at: Date.now() + (data.session.expires_in - 10) * 1000,
-          req_payload:
-            process.env.NODE_ENV === 'production' ? await requestPayload(request) : undefined,
+          // req_payload:
+          //   process.env.NODE_ENV === 'production' ? await requestPayload(request) : undefined,
         });
 
         headers.append('Set-Cookie', await commitAuthCookie(session));
